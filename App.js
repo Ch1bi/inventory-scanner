@@ -3,9 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import api from './components/api'
 import {Button} from 'react-native-elements'
 import { FormLabel, FormInput } from 'react-native-elements'
+import { StackNavigator } from 'react-navigation'
+import qrScreen from './components/screens/qr'
 
+class Login extends React.Component {
 
-export default class Login extends React.Component {
+  static navigationOptions = {
+    title: "Login",
+  };
 
   constructor(props) {
     super(props);
@@ -27,19 +32,30 @@ export default class Login extends React.Component {
 
   }
   render() {
+    
+    
+
     return (
       <View style={styles.container}>
-        <Text
-        style={{color:'white'}}>Open up App.js to start working on your app!</Text>
+ 
 
-<FormLabel>Name</FormLabel>
-<FormInput
-  ref={input => this.input = input}
+<Button
+  buttonStyle={{ backgroundColor: 'purple'}}
+  textStyle={{textAlign: 'center'}}
+  title={`Login`}
+  onPress={() =>this.props.navigation.navigate('Home')}
 />
       </View>
     );
   }
 }
+
+const moveToNext = StackNavigator({
+  Login: { screen: Login },
+ Home: { screen: qrScreen },
+});
+
+export default moveToNext;
 
 const styles = StyleSheet.create({
   container: {
