@@ -3,8 +3,14 @@ import {StackNavigator} from 'react-navigation'
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import { Constants, BarCodeScanner, Permissions } from 'expo';
 export default class qrScreen extends React.Component {
+
+    static navigationOptions = {
+        title: "Scan",
+      };
+
   state = {
-    hasCameraPermission: null
+    hasCameraPermission: null,
+    items:[]
   };
 
   componentDidMount() {
@@ -21,7 +27,7 @@ export default class qrScreen extends React.Component {
   _handleBarCodeRead = data => {
     Alert.alert(
       'Scan successful!',
-      JSON.stringify(data)
+      console.log(data.data)
     );
   };
 
