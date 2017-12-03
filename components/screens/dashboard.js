@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput,View, FlatList, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, TextInput,View, Button, FlatList, ActivityIndicator} from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
-import {Button} from 'react-native-elements'
 import { StackNavigator } from 'react-navigation'
-import qrScreen from './components/screens/qr'
+import qrScreen from './qr'
+
 
 
 
@@ -19,14 +19,19 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {  
 
-        rooms:[]
+        rooms:[],
+        modalVisible: false
 
     }
 
   }
 
-  
+  toggleModal(visible) {
+    this.setState({ modalVisible: visible });
+ }
 
+  
+  keyExtractor = (item, index) => item.id  
 
 
 
@@ -36,7 +41,25 @@ class Dashboard extends React.Component {
       <View style={styles.container}>
 
 
+    <Button>Add Room</Button>
+
       {this.state.room == 0 && <Text>You currently don't have any rooms added. Click to add rooms</Text>}
+
+      <Modal animationType = {"slide"} transparent = {false}
+               visible = {this.state.modalVisible}
+               onRequestClose = {() => { console.log("Modal has been closed.") } }>
+               <View style = {styles.modal}>
+                  <Text style = {styles.text}>Modal is open!</Text>
+                  
+                  <Button onPress = {() => {
+                     this.toggleModal(!this.state.modalVisible)}}>
+                     
+                     <Text style = {styles.text}>Close Modal</Text>
+                  </Button>
+               </View>
+            </Modal>
+
+
 
 
       </View>
@@ -45,7 +68,6 @@ class Dashboard extends React.Component {
 }
 
 const moveToNext = StackNavigator({
-  Login: { screen: Login },
  Home: { screen: qrScreen },
 });
 
