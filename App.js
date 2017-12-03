@@ -33,7 +33,9 @@ export default class Login extends React.Component {
         style={{color:'white'}}>Open up App.js to start working on your app!</Text>
 
 <FormLabel>Name</FormLabel>
-<FormInput onChangeText={someFunction}/>
+<FormInput
+  ref={input => this.input = input}
+/>
       </View>
     );
   }
