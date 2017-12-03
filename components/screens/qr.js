@@ -1,6 +1,6 @@
 import React from 'react';
 import {StackNavigator} from 'react-navigation'
-
+import { StyleSheet, Text, View } from 'react-native';
 export default class qrScreen extends React.Component {
     
       constructor(props){
@@ -17,7 +17,6 @@ export default class qrScreen extends React.Component {
         title: 'Scan',
       }
     
-     
     
     
     
@@ -27,9 +26,9 @@ export default class qrScreen extends React.Component {
     
         return (
           <View>
-          
-           <Text>QR Things go hea!</Text>
+          <Text>QR Things go hea!</Text>
           </View>
+        
         );
       }
     }
