@@ -1,10 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput,View } from 'react-native';
+import { StyleSheet, Text, TextInput,View, ActivityIndicator} from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
-import api from './components/api'
+import * as firebase from 'firebase'
 import {Button} from 'react-native-elements'
 import { StackNavigator } from 'react-navigation'
 import qrScreen from './components/screens/qr'
+
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCXoeLVSeoTw40e2AORLRV0tIMwpZpkYng",
+  authDomain: "ack-f60dc.firebaseapp.com",
+  databaseURL: "https://hack-f60dc.firebaseio.com",
+  storageBucket: "hack-f60dc.appspot.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+
 
 class Login extends React.Component {
 
@@ -25,12 +37,26 @@ class Login extends React.Component {
 
   }
 
-  onLoginPress() {
+  renderButtonOrSpinner() {
+    if (this.state.loading) {
+        return <ActivityIndicator/> 
+    }
+
+  }
+
+  
+
+  onLoginPress = ()=>{
     this.setState({ error: '', loading: true });
 
     const { email, password } = this.state;
-    api.auth().signInWithEmailAndPassword(email, password)
-        .then(() => { this.setState({ error: '', loading: false }); })
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => { this.setState({ error: '', loading: false }); 
+      })
+      .then(()=>{
+
+        this.props.navigation.navigate('Home')
+      })
         .catch(() => {
             //Login was not successful, let's create a new account
             firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -47,8 +73,10 @@ class Login extends React.Component {
     return (
       <View style={styles.container}>
 
+{this.renderButtonOrSpinner()}
+
       <Text
-      style={{fontSize:20, alignSelf:'center'}}>Sign in with your Google Account</Text>
+      style={{fontSize:20, alignSelf:'center'}}>Sign in </Text>
 
 <FormLabel>Email</FormLabel>
 
@@ -64,15 +92,21 @@ onChangeText={email=>this.setState({email})}/>
 style={{alignSelf:"center"}} 
 placeholder="Please enter your password"
 autoCorrect={false}
+secureTextEntry
 value={this.state.password}
-onChangeText={email=>this.setState({email})}/>
+onChangeText={password=>this.setState({password})}/>
 
 <Button
   buttonStyle={{ backgroundColor: 'purple', margin:3}}
   textStyle={{textAlign: 'center'}}
   title={`Login`}
-  onPress={() =>this.props.navigation.navigate('Home')}
+  onPress={this.onLoginPress}
 />
+
+<Text style={{color: '#E64A19',
+        alignSelf: 'center',
+        paddingTop: 10,
+        paddingBottom: 10}}>{this.state.error}</Text>
       </View>
     );
   }
