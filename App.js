@@ -4,7 +4,8 @@ import { FormLabel, FormInput } from 'react-native-elements'
 import * as firebase from 'firebase'
 import {Button} from 'react-native-elements'
 import { StackNavigator } from 'react-navigation'
-import qrScreen from './components/screens/qr'
+import dashScreen from './components/screens/dashboard'
+
 
 
 // Initialize Firebase
@@ -55,7 +56,7 @@ class Login extends React.Component {
       })
       .then(()=>{
 
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('Dash')
       })
         .catch(() => {
             //Login was not successful, let's create a new account
@@ -114,7 +115,7 @@ onChangeText={password=>this.setState({password})}/>
 
 const moveToNext = StackNavigator({
   Login: { screen: Login },
- Home: { screen: qrScreen },
+ Dash: { screen: dashScreen },
 });
 
 export default moveToNext;

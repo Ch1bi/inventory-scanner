@@ -1,18 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput,View, Button, FlatList, ActivityIndicator} from 'react-native';
-import { FormLabel, FormInput } from 'react-native-elements'
+import { StyleSheet, Text, TextInput,View, FlatList, ActivityIndicator, Modal} from 'react-native';
+import { FormLabel, FormInput,Button} from 'react-native-elements'
 import { StackNavigator } from 'react-navigation'
-import qrScreen from './qr'
-
-
-
-
-
-
+import qr from './qr'
 class Dashboard extends React.Component {
 
   static navigationOptions = {
-    title: "Dashboard",
+    title: "Dashboard"
   };
 
   constructor(props) {
@@ -41,7 +35,7 @@ class Dashboard extends React.Component {
       <View style={styles.container}>
 
 
-    <Button>Add Room</Button>
+
 
       {this.state.room == 0 && <Text>You currently don't have any rooms added. Click to add rooms</Text>}
 
@@ -67,11 +61,13 @@ class Dashboard extends React.Component {
   }
 }
 
-const moveToNext = StackNavigator({
- Home: { screen: qrScreen },
-});
+const moveToQr = StackNavigator({
+    Dash: { screen: Dashboard },
+   Qr: { screen: qr },
+  });
 
-export default moveToNext;
+
+  export default moveToQr;
 
 const styles = StyleSheet.create({
   container: {
